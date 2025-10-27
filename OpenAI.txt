@@ -1,0 +1,8 @@
+ChatGPT-4 by OpenAI
+Claude by Anthropic
+LaMDA by Google
+ERNIE by Baidu
+LLaMA by Meta
+Mistral by Mistral AI
+Grok by xAI
+Megatron-Turing NLG by NVIDIA and Microsoft

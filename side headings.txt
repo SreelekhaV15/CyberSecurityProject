@@ -1,0 +1,66 @@
+1.	Introduction 
+1.1.	Steganography Overview
+2.	Background
+2.1.	Historical Context
+2.2.	Types of Steganography
+3.	Image Steganography
+3.1.	Introduction to Image Steganography
+3.2.	Techniques in Image Steganography
+3.2.1.	Least Significant Bit (LSB) Insertion
+3.2.2.	Masking and Filtering
+3.2.3.	Transform Domain Techniques
+3.2.4.	Edge Detection and Adaptive Methods
+4.	Least Significant Bit (LSB) Method
+4.1.	Explanation and Examples
+4.2.	Mathematical Foundation
+4.3.	Algorithm Implementation
+4.4.	Advantages and Disadvantages
+5.	Literature Review
+6.	Project Objectives
+7.	Tools and Technologies
+7.1.	Programming Languages
+7.2.	Libraries and Frameworks
+7.3.	Development Environment
+7.4.	Image Processing Tools
+8.	Application Workflow
+8.1.	System Architecture
+8.2.	Encoding Process
+8.2.1.	Detailed Steps
+8.2.2.	Pseudocode and Flowcharts
+8.3.	Decoding Process
+8.3.1.	Detailed Steps
+8.3.2.	Pseudocode and Flowcharts
+9.	Implementation Details
+9.1.	Code Explanation
+9.2.	User Interface Design
+9.2.1.	Wireframes and Mockups
+9.2.2.	User Experience (UX) Considerations
+9.3.	Performance Metrics
+9.3.1.	Time Complexity Analysis
+9.3.2.	Quality Assessment Metrics
+10.	Case Studies
+11.	Real-World Applications
+12.	Comparative Analysis with Other Methods
+13.	Advanced Techniques
+14.	Fibonacci Bit-Plane Mapping
+14.1.	Theory and Implementation
+14.2.	Benefits and Use Cases
+15.	Message Size Reduction
+15.1.	Compression Techniques
+15.2.	Encryption Methods
+16.	Stego Quality Enhancement
+16.1.	Image Processing Techniques
+16.2.	Adaptive Embedding
+17.	Quantum Computing
+18.	Introduction to Quantum Computing
+19.	Potential Applications in Steganography
+20.	Quantum Encryption and Decryption
+21.	Future Enhancements
+22.	Improved Security Measures
+23.	Robustness Against Steganalysis
+24.	Increased Capacity and Efficiency
+25.	User-Friendly Enhancements
+26.	Conclusion
+27.	References
+28.	Appendices
+29.	Source Code

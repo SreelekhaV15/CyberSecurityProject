@@ -1,0 +1,396 @@
+import tkinter as tk
+from tkinter import messagebox
+from googletrans import Translator, LANGUAGES
+from tkinter import filedialog
+import base64 
+import os
+import subprocess 
+import pkg_resources
+import webbrowser
+import threading
+required_packages = ['cryptography', 'pillow', 'secure-smtplib']
+# Check if each required package is installed
+for package in required_packages:
+    try:
+        pkg_resources.get_distribution (package)
+    except pkg_resources.DistributionNotFound:
+# If the package is not installed, install it
+         print(f"{package} is not installed. Installing...")
+         subprocess.check_call(['pip', 'install', package])
+from cryptography.fernet import Fernet, InvalidToken
+from PIL import Image, ImageTk
+from tkinter import TK, photoImage
+import io
+import tempfile
+import sys
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime. image import MIMEImage 
+from email.mime.text import MIMEText 
+from email.mime.application import MIMEApplication
+import re
+icon_path = 'logo.png'
+#replace 'base64_icon' with your actual base64-encoded image
+base64_icon = ''
+
+#create base64 string to bytes
+icon_data = base64.b64decode(base64_icon)
+
+#create the main window and buttons
+root = tk.TK()
+#create a photoImage object from bytyes
+icon_image = photoImage(data=icon_data)
+root.iconphoto(True, icon_image)
+root.title("IMAGE STEGNOGRAPY")
+root.geometry("600x500")
+window_width = 600
+window_height = 500
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+x = int((screen_width / 2) - (window_width / 2))
+y = int((screen_height / 2) - (window_height / 2))
+root.geometry(f"{window_width}x{window_height}+{x}+{y}")
+root.configure(bg='black')
+
+
+def project_info():
+    html_code = ""
+    <!DOCTYPE html>
+<html>
+<head>
+   <title>project info</title>
+   <meta name="viewport" content="width=devide-width,initial-scale=1.0">
+   <style>
+       body{
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+       }   
+      .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 50px 20px;
+          background-color: #fff;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          border-radius:4px;
+          position: relative;
+      }
+      .photo {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          width: 100px;
+          height: 100px;
+          background-image: url('data:image/png;base64,#iamges base64 value')
+          background-size: cover;
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#savce the html content to a temporary file
+with tempfile.NamedTemporaryFile(mode='w,delete=False',suffix='html')
+    temp_file.write(html_code)
+    temp_file_path = temp_file.name
+#open the temporary HTML file in the default web browser
+webbrowser.open('file://' + os.path.realpath(temp_file_path))
+#define the function to be executed when the first button is clicked
+def button1_clicked():
+    global file_window
+    file_window = tk.Toplevel(root)
+    file_window.geometry("560x250")
+    file_window.title("select Image")
+    #create a label widget for the file path
+    filepath_label = tk.Label(file_window, text="File Path")
+    message_label = tk.Label(file_window, text="message")
+    email_label = tk.Label(file_window, text="Sender Email")
+    smtp_label = tk.Label(file_window, text=" SMTP Email")
+    receiver_label = tk.Label(file_window, text="Receiver Email")
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Email details
+def send_email(receiver_email, key, image_path, loading_window):
+  sender_email = 'suprajatechnologiesprojects@gmail.com'
+  receiver_email = email
+  subject ='The Key and Encrypted Image'
+  message = 'The Key for Encrypted Image is: \n' +str(key)
+#Image details
+  image_path = output_path
+#Create a multipart message
+  msg = MIMEMultipart()
+  msg['From'] = sender_email
+  msg['To'] = receiver_email
+  msg['Subject'] = subject
+# Open the file in bynary
+  with open (image_path,"rb") as attachment:
+# Add file as application/octet-stream
+# Email client can usually download this automatically as attachment
+     part = MIMEApplication(attachment.read(), Name=image_path)
+# Add header
+     part["Content-Disposition"] = f"attachment; filename= {image_path}"
+# Attach the file to the email
+     msg.attach(part)
+#Add a text message to the email
+  msg.attach(MIMEText (message, 'plain'))
+#SMTP server details
+  smtp_server = 'smtp-gmail.com'
+  smtp_port = 587
+  smtp_username = ' suprajatechnologiesprojects@gmail.com'
+  smtp_password = 'vadtydrhhckkjef'
+#Connect to the SMTP server
+  server = smtplib.SMTP(smtp_server, smtp_port)
+  server. starttls()
+  server. login(smtp_username, smtp_password)
+#Send the email 
+  try:
+      server.send_message(msg)
+  except smtplib.SMTPRecipientsRefused:
+      messagebox.showerror("Error", "Invalid Email Address")
+      loading_window.destroy()
+      return
+#Disconnect from the email 
+  server.quit()
+# Close the loading window
+  loading_window.destroy()
+# Show success message
+  messagebox.showinfo("Info", "Image encrypted successfully.")
+  output_path = "encoded_image.png"
+def encrypt_image(image_path, message, output_path):  
+    key = Fernet.generate_key()
+    message = message_entry.get()
+    f = Fernet(key)
+    secret_message = f.encrypt (message.encode())
+# Open the image
+    image = Image.open(image_path)
+# Convert the image to RGB mode if it's not already
+    image = image.convert ("RGB")
+# Get the pixel data of the image
+    pixels = list(image.getdata())
+    width, height = image.size
+# Convert the secret message to binary
+    binary_secret = ''
+    if secret_message:
+       secret_message_str = str(secret_message) + '\n'
+# Ensure secret_message is a string
+       binary_secret = ''.join(format (ord(char),'08b') for char in secret_message_str)
+# Pad the binary secret message to make its length a multiple of 3
+       remainder = Len(binary_secret) % 3
+       if remainder != 0:
+          binary_secret += '0' * (3 - remainder)
+# Check if the image can hold the secret message
+       max_chars = (width * height) * 3 // 8
+       if Len (binary_secret) > max_chars:
+           raise ValueError ("Secret message is too long to fit in the image.")
+# Embed the secret message into the pixel data
+       index = 0
+       for i, pixel in enumerate(pixels): 
+           if index < Len (binary_secret):
+# Convert the pixel value to binary
+               r, g, b = map(lambda x: format(x, '08b'), pixel)
+# Modify the least significant bit (LSB) of each color component
+               r = r[:-1] + binary_secret [index]
+               g = g[: -1] + binary_secret[index + 1]
+               b = b[:-1] + binary_secret [index + 2]
+# Update the pixel with the modified color components
+               pixels [i] = (int(r, 2), int(g, 2), int(b, 2))
+               index += 3 
+           else:
+               new_pixels.append(pixel)
+# Create a new image with the modified pixel data
+       encoded_image = Image.new("RGB", (width, height))
+       encoded_image.putdata(pixels)
+# Save the encoded image
+       encoded_image.save(output_path)
+       key = bytes (password.encode())
+       key = key [2: -1]
+       return key
+def translate_message(message, target_language):
+    translator = Translator()
+    translated = translator.translate(message, dest=target_language)
+    return translated.text
+
+def create_gui():
+    root = tk.Tk()
+    root.title("Image Encryption and Translation")
+
+    # Language selection dropdown
+    tk.Label(root, text="Select Language:").grid(row=0, column=0, padx=10, pady=10)
+    language_combobox = ttk.Combobox(root, values=list(LANGUAGES.values()), state="readonly")
+    language_combobox.grid(row=0, column=1, padx=10, pady=10)
+    language_combobox.set("Select a language")
+
+    # Message entry
+    tk.Label(root, text="Enter Message:").grid(row=1, column=0, padx=10, pady=10)
+    message_entry = tk.Text(root, height=10, width=50)
+    message_entry.grid(row=1, column=1, padx=10, pady=10)
+
+    # Translate button
+    def on_translate():
+        selected_language = language_combobox.get()
+        if selected_language not in LANGUAGES.values():
+            messagebox.showerror("Error", "Please select a valid language")
+            return
+        
+        message = message_entry.get("1.0", tk.END).strip()
+        if not message:
+            messagebox.showerror("Error", "Please enter a message to translate")
+            return
+        
+        lang_code = list(LANGUAGES.keys())[list(LANGUAGES.values()).index(selected_language)]
+        translated_message = translate_message(message, lang_code)
+        translated_message_var.set(translated_message)
+
+    translate_button = tk.Button(root, text="Translate", command=on_translate)
+    translate_button.grid(row=2, column=0, columnspan=2, pady=10)
+
+    # Translated message display
+    tk.Label(root, text="Translated Message:").grid(row=3, column=0, padx=10, pady=10)
+    translated_message_var = tk.StringVar()
+    translated_message_label = tk.Label(root, textvariable=translated_message_var, wraplength=400)
+    translated_message_label.grid(row=3, column=1, padx=10, pady=10)
+    return 
+#Get the pixel data of the encoded image
+def decrypt_image(file_path, key):
+    key = bytes(key.encode())
+    #Open the encoded image
+    encoded_image = Image. open (file_path)
+    pixels = List(encoded_image.getdata())
+# Extract the hidden message from the LSB of each color component
+    binary_secret = ""
+    for pixel in pixels: 
+        r, g, b = pixel
+        binary_secret += format(r, '08b')[-1]
+        binary_secret += format(g, '08b')[-1]
+        binary_secret += format(b, '08b')[-1]
+    
+    try:
+        r, g, b = pixel
+    except ValueError:
+        messagebox. showerror ("Error","Please select encrypted photo")
+        loading_window.destroy()
+        return
+    binary_secret += format(r, '08b')[-1] 
+    binary_secret += format(g, '08b')[-1] 
+    binary_secret += format(b, '08b')[-1]
+# Convert the binary secret message to text
+    secret_message = ""
+    for i in range(0, Len(binary_secret), 8):
+        byte = binary_secret[1:1+8]
+        char = chr (int(byte, 2))
+        secret_message += char
+    message = secret_message.split('\n')
+    message = bytes(message[0].encode ())
+    message = message [2: -1]
+    try:
+        try:
+           f = Fernet (key)
+        except ValueError:
+           messagebox.showerror("Error", "Invalid Key. Decryption failed") 
+           loading_window.destroy()
+        return
+        original_message = f.decrypt(message).decode()
+        print(original_message)
+# Close the loading window
+        loading_window.destroy()
+# Show success message
+        messagebox. showinfo("Info", "The Hidden Text is\n"+original_message)
+    except InvalidToken:
+       messagebox. showerror ("Error", "Invalid Key. Decryption failed") 
+    return
+def translate_message(message, target_language):
+    translator = Translator()
+    translated = translator.translate(message, dest=target_language)
+    return translated.text
+
+def create_gui():
+    root = tk.Tk()
+    root.title("Image Encryption and Translation")
+
+    # Language selection dropdown
+    tk.Label(root, text="Select Language:").grid(row=0, column=0, padx=10, pady=10)
+    language_combobox = ttk.Combobox(root, values=list(LANGUAGES.values()), state="readonly")
+    language_combobox.grid(row=0, column=1, padx=10, pady=10)
+    language_combobox.set("Select a language")
+
+    # Message entry
+    tk.Label(root, text="Enter Message:").grid(row=1, column=0, padx=10, pady=10)
+    message_entry = tk.Text(root, height=10, width=50)
+    message_entry.grid(row=1, column=1, padx=10, pady=10)
+
+    # Translate button
+    def on_translate():
+        selected_language = language_combobox.get()
+        if selected_language not in LANGUAGES.values():
+            messagebox.showerror("Error", "Please select a valid language")
+            return
+        
+        message = message_entry.get("1.0", tk.END).strip()
+        if not message:
+            messagebox.showerror("Error", "Please enter a message to translate")
+            return
+        
+        lang_code = list(LANGUAGES.keys())[list(LANGUAGES.values()).index(selected_language)]
+        translated_message = translate_message(message, lang_code)
+        translated_message_var.set(translated_message)
+
+    translate_button = tk.Button(root, text="Translate", command=on_translate)
+    translate_button.grid(row=2, column=0, columnspan=2, pady=10)
+
+    # Translated message display
+    tk.Label(root, text="Translated Message:").grid(row=3, column=0, padx=10, pady=10)
+    translated_message_var = tk.StringVar()
+    translated_message_label = tk.Label(root, textvariable=translated_message_var, wraplength=400)
+    translated_message_label.grid(row=3, column=1, padx=10, pady=10)
+    return
